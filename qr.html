@@ -1,0 +1,3086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f4f5f2">
+<meta name="color-scheme" content="light">
+
+<title>QR Code Generator — NVO987</title>
+
+<meta
+    name="description"
+    content="A privacy-first QR code generator for creating text, URL, Wi-Fi, email and contact QR codes directly in your browser."
+>
+
+<style>
+/* =========================================================
+   NVO987 QR
+   Premium Educational / Research Interface
+   ========================================================= */
+
+:root {
+    --page: #f4f5f2;
+    --surface: #ffffff;
+    --surface-2: #f8f9f7;
+    --surface-3: #eef1ed;
+
+    --ink: #17201b;
+    --ink-soft: #334039;
+    --muted: #68736c;
+    --muted-2: #8a938d;
+
+    --line: #dfe4df;
+    --line-dark: #cbd3cd;
+
+    --green: #234b3a;
+    --green-dark: #17382a;
+    --green-soft: #e4ece7;
+    --green-line: #c8d7ce;
+
+    --white: #ffffff;
+    --black: #111512;
+
+    --shadow-sm:
+        0 2px 8px rgba(20, 30, 24, .04);
+
+    --shadow:
+        0 18px 50px rgba(20, 30, 24, .07);
+
+    --shadow-lg:
+        0 28px 80px rgba(20, 30, 24, .11);
+
+    --radius-sm: 12px;
+    --radius: 20px;
+    --radius-lg: 28px;
+
+    --max: 1180px;
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+
+    font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 18px;
+    line-height: 1.65;
+
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+}
+
+img,
+svg,
+canvas {
+    max-width: 100%;
+}
+
+
+/* =========================================================
+   LAYOUT
+   ========================================================= */
+
+.container {
+    width: min(var(--max), calc(100% - 40px));
+    margin-inline: auto;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    background: rgba(244, 245, 242, .88);
+    border-bottom: 1px solid rgba(223, 228, 223, .85);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.header-inner {
+    min-height: 78px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 30px;
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 13px;
+
+    text-decoration: none;
+}
+
+.brand-mark {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 11px;
+
+    background: var(--green);
+
+    display: grid;
+    place-items: center;
+
+    color: white;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.12);
+}
+
+.brand-mark::before {
+    content: "";
+    width: 17px;
+    height: 17px;
+
+    border: 3px solid white;
+    border-radius: 3px;
+
+    box-shadow:
+        8px 0 0 -5px var(--green),
+        0 8px 0 -5px var(--green);
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+
+    line-height: 1.1;
+}
+
+.brand-name {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -.02em;
+}
+
+.brand-subtitle {
+    margin-top: 4px;
+
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: .11em;
+    text-transform: uppercase;
+}
+
+.header-link {
+    color: var(--ink-soft);
+
+    font-size: 14px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    padding: 9px 13px;
+    border-radius: 10px;
+}
+
+.header-link:hover {
+    background: var(--surface);
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero {
+    padding: 92px 0 58px;
+}
+
+.hero-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 8px 13px;
+
+    border: 1px solid var(--green-line);
+    border-radius: 999px;
+
+    background: var(--green-soft);
+    color: var(--green);
+
+    font-size: 13px;
+    font-weight: 800;
+
+    letter-spacing: .04em;
+}
+
+.hero-label::before {
+    content: "";
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+    background: var(--green);
+}
+
+.hero h1 {
+    max-width: 900px;
+
+    margin: 22px 0 0;
+
+    font-size: clamp(44px, 7vw, 78px);
+    line-height: 1.01;
+
+    letter-spacing: -.055em;
+    font-weight: 800;
+}
+
+.hero p {
+    max-width: 760px;
+
+    margin: 25px 0 0;
+
+    color: var(--muted);
+
+    font-size: clamp(19px, 2.2vw, 23px);
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   GENERATOR
+   ========================================================= */
+
+.generator-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.12fr)
+        minmax(360px, .88fr);
+
+    gap: 24px;
+
+    align-items: start;
+}
+
+.panel {
+    background: var(--surface);
+
+    border: 1px solid var(--line);
+
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow);
+}
+
+.editor-panel {
+    padding: 34px;
+}
+
+.preview-panel {
+    padding: 34px;
+
+    position: sticky;
+    top: 103px;
+}
+
+.panel-header {
+    margin-bottom: 28px;
+}
+
+.panel-kicker {
+    margin-bottom: 7px;
+
+    color: var(--green);
+
+    font-size: 12px;
+    font-weight: 800;
+
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.panel-title {
+    margin: 0;
+
+    font-size: 28px;
+    line-height: 1.2;
+
+    letter-spacing: -.025em;
+}
+
+.panel-description {
+    margin: 9px 0 0;
+
+    color: var(--muted);
+
+    font-size: 16px;
+}
+
+
+/* =========================================================
+   CONTENT TYPE NAV
+   ========================================================= */
+
+.type-grid {
+    display: grid;
+
+    grid-template-columns: repeat(5, 1fr);
+
+    gap: 8px;
+
+    margin-bottom: 30px;
+}
+
+.type-button {
+    min-height: 55px;
+
+    padding: 10px 8px;
+
+    border: 1px solid var(--line);
+    border-radius: 12px;
+
+    background: var(--surface-2);
+    color: var(--ink-soft);
+
+    font-size: 14px;
+    font-weight: 750;
+
+    transition:
+        background .18s ease,
+        border-color .18s ease,
+        color .18s ease,
+        transform .18s ease;
+}
+
+.type-button:hover {
+    border-color: var(--green-line);
+    transform: translateY(-1px);
+}
+
+.type-button.active {
+    background: var(--green);
+    border-color: var(--green);
+    color: white;
+
+    box-shadow:
+        0 5px 16px rgba(35, 75, 58, .16);
+}
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.field {
+    margin-bottom: 22px;
+}
+
+.field:last-child {
+    margin-bottom: 0;
+}
+
+label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: var(--ink);
+
+    font-size: 15px;
+    font-weight: 800;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+
+    min-height: 53px;
+
+    padding: 13px 15px;
+
+    border: 1px solid var(--line-dark);
+    border-radius: var(--radius-sm);
+
+    outline: none;
+
+    background: var(--surface);
+    color: var(--ink);
+
+    transition:
+        border-color .18s ease,
+        box-shadow .18s ease;
+}
+
+textarea {
+    min-height: 155px;
+    resize: vertical;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--muted-2);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--green);
+
+    box-shadow:
+        0 0 0 4px rgba(35, 75, 58, .10);
+}
+
+.help {
+    margin-top: 7px;
+
+    color: var(--muted);
+
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   OPTIONS
+   ========================================================= */
+
+.options {
+    margin-top: 32px;
+    padding-top: 30px;
+
+    border-top: 1px solid var(--line);
+}
+
+.options-heading {
+    margin-bottom: 22px;
+}
+
+.options-heading h3 {
+    margin: 0;
+
+    font-size: 21px;
+    line-height: 1.25;
+}
+
+.options-heading p {
+    margin: 6px 0 0;
+
+    color: var(--muted);
+
+    font-size: 15px;
+}
+
+.options-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 18px;
+}
+
+.color-control {
+    display: grid;
+
+    grid-template-columns: 54px minmax(0, 1fr);
+
+    gap: 9px;
+}
+
+input[type="color"] {
+    width: 54px;
+    height: 53px;
+
+    padding: 5px;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   GENERATOR ACTIONS
+   ========================================================= */
+
+.generator-actions {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+
+    margin-top: 28px;
+}
+
+.button {
+    min-height: 54px;
+
+    padding: 12px 18px;
+
+    border: 1px solid var(--line-dark);
+    border-radius: 13px;
+
+    background: var(--surface);
+    color: var(--ink);
+
+    font-size: 15px;
+    font-weight: 800;
+
+    transition:
+        transform .18s ease,
+        border-color .18s ease,
+        background .18s ease,
+        box-shadow .18s ease;
+}
+
+.button:hover:not(:disabled) {
+    border-color: var(--green);
+    transform: translateY(-1px);
+}
+
+.button-primary {
+    background: var(--green);
+    border-color: var(--green);
+
+    color: white;
+
+    box-shadow:
+        0 8px 20px rgba(35, 75, 58, .14);
+}
+
+.button-primary:hover:not(:disabled) {
+    background: var(--green-dark);
+}
+
+.button:disabled {
+    opacity: .42;
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   PREVIEW
+   ========================================================= */
+
+.preview-status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 18px;
+}
+
+.status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+    font-weight: 750;
+}
+
+.status::before {
+    content: "";
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: var(--muted-2);
+}
+
+.status.ready {
+    color: var(--green);
+}
+
+.status.ready::before {
+    background: var(--green);
+}
+
+.preview-frame {
+    min-height: 410px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 28px;
+
+    border: 1px solid var(--line);
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fafbf9 0%,
+            #f4f6f3 100%
+        );
+}
+
+#qr-output {
+    width: min(100%, 330px);
+    aspect-ratio: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#qr-output svg,
+#qr-output canvas {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    max-width: 330px;
+}
+
+.placeholder {
+    max-width: 280px;
+
+    text-align: center;
+
+    color: var(--muted);
+
+    font-size: 15px;
+}
+
+.placeholder-icon {
+    width: 66px;
+    height: 66px;
+
+    margin: 0 auto 18px;
+
+    border: 1px solid var(--line-dark);
+    border-radius: 16px;
+
+    background: white;
+
+    display: grid;
+    place-items: center;
+}
+
+.placeholder-icon::before {
+    content: "";
+
+    width: 26px;
+    height: 26px;
+
+    background:
+        linear-gradient(90deg, var(--ink) 30%, transparent 30% 70%, var(--ink) 70%),
+        linear-gradient(var(--ink) 30%, transparent 30% 70%, var(--ink) 70%);
+
+    opacity: .72;
+}
+
+.placeholder strong {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: var(--ink);
+
+    font-size: 19px;
+}
+
+
+/* =========================================================
+   EXPORT
+   ========================================================= */
+
+.export-actions {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 9px;
+
+    margin-top: 14px;
+}
+
+.print-button {
+    width: 100%;
+
+    margin-top: 9px;
+}
+
+
+/* =========================================================
+   PRIVACY NOTICE
+   ========================================================= */
+
+.privacy-card {
+    display: grid;
+
+    grid-template-columns: auto minmax(0, 1fr);
+
+    gap: 18px;
+
+    margin: 24px 0 75px;
+
+    padding: 24px;
+
+    border: 1px solid var(--green-line);
+    border-radius: var(--radius);
+
+    background: var(--green-soft);
+}
+
+.privacy-icon {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+
+    background: var(--green);
+
+    color: white;
+
+    display: grid;
+    place-items: center;
+
+    font-weight: 900;
+}
+
+.privacy-card h3 {
+    margin: 0 0 5px;
+
+    font-size: 19px;
+}
+
+.privacy-card p {
+    margin: 0;
+
+    color: #45544b;
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   EDUCATION
+   ========================================================= */
+
+.education-section {
+    padding: 88px 0;
+
+    border-top: 1px solid var(--line);
+}
+
+.section-intro {
+    max-width: 760px;
+
+    margin-bottom: 35px;
+}
+
+.section-label {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: var(--green);
+
+    font-size: 12px;
+    font-weight: 850;
+
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.section-heading {
+    margin: 0;
+
+    font-size: clamp(31px, 4vw, 44px);
+    line-height: 1.12;
+
+    letter-spacing: -.035em;
+}
+
+.section-intro p {
+    margin: 15px 0 0;
+
+    color: var(--muted);
+
+    font-size: 18px;
+}
+
+.education-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 18px;
+}
+
+.education-card {
+    min-height: 235px;
+
+    padding: 28px;
+
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+
+    background: var(--surface);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.education-number {
+    display: inline-flex;
+
+    width: 35px;
+    height: 35px;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 28px;
+
+    border-radius: 10px;
+
+    background: var(--green-soft);
+    color: var(--green);
+
+    font-size: 13px;
+    font-weight: 850;
+}
+
+.education-card h3 {
+    margin: 0 0 9px;
+
+    font-size: 21px;
+    line-height: 1.25;
+}
+
+.education-card p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   LEGAL
+   ========================================================= */
+
+.legal-section {
+    padding: 88px 0;
+
+    border-top: 1px solid var(--line);
+}
+
+.legal-content {
+    max-width: 880px;
+}
+
+.legal-content h2 {
+    margin: 0 0 38px;
+
+    font-size: 40px;
+    line-height: 1.15;
+
+    letter-spacing: -.035em;
+}
+
+.legal-block {
+    padding: 27px 0;
+
+    border-top: 1px solid var(--line);
+}
+
+.legal-block:first-of-type {
+    border-top: 0;
+}
+
+.legal-block h3 {
+    margin: 0 0 9px;
+
+    font-size: 20px;
+}
+
+.legal-block p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   PREMIUM FOOTER
+   ========================================================= */
+
+.site-footer {
+    position: relative;
+
+    overflow: hidden;
+
+    background: #111714;
+
+    color: #eef3ef;
+
+    border-top: 1px solid #27322c;
+}
+
+.site-footer::before {
+    content: "";
+
+    position: absolute;
+
+    width: 600px;
+    height: 600px;
+
+    top: -360px;
+    right: -180px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(96, 145, 118, .16) 0%,
+            rgba(96, 145, 118, 0) 68%
+        );
+
+    pointer-events: none;
+}
+
+.site-footer::after {
+    content: "";
+
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    bottom: -390px;
+    left: -180px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.045) 0%,
+            rgba(255,255,255,0) 68%
+        );
+
+    pointer-events: none;
+}
+
+.footer-inner {
+    position: relative;
+    z-index: 1;
+
+    padding: 68px 0 28px;
+}
+
+.footer-main {
+    display: grid;
+
+    grid-template-columns: 1fr auto;
+
+    gap: 60px;
+
+    padding-bottom: 58px;
+
+    border-bottom: 1px solid #2a342f;
+}
+
+.footer-brand {
+    max-width: 480px;
+}
+
+.footer-brand-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    margin-bottom: 22px;
+}
+
+.footer-mark {
+    width: 46px;
+    height: 46px;
+
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 13px;
+
+    background: rgba(255,255,255,.055);
+
+    display: grid;
+    place-items: center;
+}
+
+.footer-mark::before {
+    content: "";
+
+    width: 20px;
+    height: 20px;
+
+    border: 3px solid #dce8df;
+    border-radius: 4px;
+}
+
+.footer-title {
+    margin: 0;
+
+    color: white;
+
+    font-size: 18px;
+    font-weight: 800;
+
+    letter-spacing: -.02em;
+}
+
+.footer-caption {
+    margin: 3px 0 0;
+
+    color: #87938b;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: .11em;
+    text-transform: uppercase;
+}
+
+.footer-description {
+    max-width: 510px;
+
+    margin: 0;
+
+    color: #9da8a1;
+
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 270px;
+}
+
+.footer-link-label {
+    margin-bottom: 13px;
+
+    color: #66736b;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.footer-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 12px 0;
+
+    border-bottom: 1px solid #27312c;
+
+    color: #dfe8e1;
+
+    text-decoration: none;
+
+    font-size: 15px;
+    font-weight: 650;
+
+    transition:
+        color .18s ease,
+        padding-left .18s ease;
+}
+
+.footer-link:last-child {
+    border-bottom: 0;
+}
+
+.footer-link:hover {
+    color: white;
+    padding-left: 5px;
+}
+
+.footer-arrow {
+    color: #66736b;
+
+    font-size: 16px;
+}
+
+.footer-bottom {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    padding-top: 24px;
+}
+
+.footer-copyright {
+    color: #69766e;
+
+    font-size: 12px;
+}
+
+.footer-meta {
+    display: flex;
+
+    align-items: center;
+    gap: 10px;
+
+    color: #69766e;
+
+    font-size: 12px;
+}
+
+.footer-dot {
+    width: 4px;
+    height: 4px;
+
+    border-radius: 50%;
+
+    background: #526057;
+}
+
+
+/* =========================================================
+   PRINT
+   ========================================================= */
+
+@media print {
+
+    .site-header,
+    .hero,
+    .editor-panel,
+    .education-section,
+    .legal-section,
+    .privacy-card,
+    .site-footer,
+    .preview-panel .panel-header,
+    .preview-status,
+    .export-actions,
+    .print-button {
+        display: none !important;
+    }
+
+    body {
+        background: white;
+    }
+
+    .generator-layout {
+        display: block;
+    }
+
+    .preview-panel {
+        position: static;
+
+        border: 0;
+        box-shadow: none;
+
+        padding: 0;
+    }
+
+    .preview-frame {
+        border: 0;
+        min-height: 0;
+
+        background: white;
+    }
+
+    #qr-output {
+        width: 70mm;
+    }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 920px) {
+
+    .generator-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .preview-panel {
+        position: static;
+    }
+
+    .education-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .footer-main {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-links {
+        min-width: 0;
+        max-width: 500px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 680px) {
+
+    body {
+        font-size: 17px;
+    }
+
+    .container {
+        width: min(100% - 24px, var(--max));
+    }
+
+    .header-inner {
+        min-height: 70px;
+    }
+
+    .header-link {
+        display: none;
+    }
+
+    .hero {
+        padding: 55px 0 35px;
+    }
+
+    .hero h1 {
+        font-size: clamp(41px, 13vw, 58px);
+    }
+
+    .hero p {
+        font-size: 18px;
+    }
+
+    .editor-panel,
+    .preview-panel {
+        padding: 22px;
+    }
+
+    .panel-title {
+        font-size: 25px;
+    }
+
+    .type-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .type-button:last-child {
+        grid-column: span 2;
+    }
+
+    .options-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .generator-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .export-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .preview-frame {
+        min-height: 315px;
+
+        padding: 20px;
+    }
+
+    .privacy-card {
+        grid-template-columns: 1fr;
+
+        margin-bottom: 55px;
+        padding: 21px;
+    }
+
+    .education-section,
+    .legal-section {
+        padding: 62px 0;
+    }
+
+    .education-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .education-card {
+        min-height: auto;
+    }
+
+    .legal-content h2 {
+        font-size: 32px;
+    }
+
+    .footer-inner {
+        padding-top: 48px;
+    }
+
+    .footer-main {
+        gap: 42px;
+        padding-bottom: 40px;
+    }
+
+    .footer-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+    .footer-meta {
+        flex-wrap: wrap;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+    }
+}
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =======================================================
+     HEADER
+     ======================================================= -->
+
+<header class="site-header">
+
+    <div class="container header-inner">
+
+        <a class="brand" href="/" aria-label="QR NVO987 home">
+
+            <span class="brand-mark" aria-hidden="true"></span>
+
+            <span class="brand-text">
+
+                <span class="brand-name">
+                    QR NVO987
+                </span>
+
+                <span class="brand-subtitle">
+                    Privacy-first QR tools
+                </span>
+
+            </span>
+
+        </a>
+
+
+        <a class="header-link" href="#legal">
+            Legal &amp; Privacy
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<main>
+
+
+<!-- =======================================================
+     HERO
+     ======================================================= -->
+
+<section class="hero">
+
+    <div class="container">
+
+        <span class="hero-label">
+            Browser-based · Client-side · No account required
+        </span>
+
+
+        <h1>
+            Create QR codes with clarity and confidence.
+        </h1>
+
+
+        <p>
+            A focused QR code generator designed for practical use,
+            education and research. Create and customize QR codes
+            directly in your browser.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =======================================================
+     GENERATOR
+     ======================================================= -->
+
+<section class="container">
+
+    <div class="generator-layout">
+
+
+        <!-- =================================================
+             EDITOR
+             ================================================= -->
+
+        <section class="panel editor-panel">
+
+            <div class="panel-header">
+
+                <div class="panel-kicker">
+                    QR generator
+                </div>
+
+                <h2 class="panel-title">
+                    What would you like to encode?
+                </h2>
+
+                <p class="panel-description">
+                    Select a content type and enter the information
+                    you want to place inside the QR code.
+                </p>
+
+            </div>
+
+
+            <div class="type-grid">
+
+                <button
+                    class="type-button active"
+                    type="button"
+                    data-type="text"
+                >
+                    Text
+                </button>
+
+                <button
+                    class="type-button"
+                    type="button"
+                    data-type="url"
+                >
+                    URL
+                </button>
+
+                <button
+                    class="type-button"
+                    type="button"
+                    data-type="wifi"
+                >
+                    Wi-Fi
+                </button>
+
+                <button
+                    class="type-button"
+                    type="button"
+                    data-type="email"
+                >
+                    E-mail
+                </button>
+
+                <button
+                    class="type-button"
+                    type="button"
+                    data-type="vcard"
+                >
+                    Contact
+                </button>
+
+            </div>
+
+
+            <div id="form-area">
+
+
+                <div class="field">
+
+                    <label for="main-input">
+                        Text
+                    </label>
+
+                    <textarea
+                        id="main-input"
+                        placeholder="Enter the text you want to encode..."
+                        autocomplete="off"
+                    ></textarea>
+
+                    <div class="help">
+                        Your content is processed locally in this browser.
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =============================================
+                 APPEARANCE
+                 ============================================= -->
+
+            <div class="options">
+
+                <div class="options-heading">
+
+                    <h3>
+                        Appearance
+                    </h3>
+
+                    <p>
+                        Adjust the visual characteristics of your QR code.
+                    </p>
+
+                </div>
+
+
+                <div class="options-grid">
+
+
+                    <div class="field">
+
+                        <label for="foreground">
+                            Foreground color
+                        </label>
+
+                        <div class="color-control">
+
+                            <input
+                                type="color"
+                                id="foreground"
+                                value="#111512"
+                                aria-label="Foreground color"
+                            >
+
+                            <input
+                                type="text"
+                                id="foreground-text"
+                                value="#111512"
+                                maxlength="7"
+                                aria-label="Foreground HEX color"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="background">
+                            Background color
+                        </label>
+
+                        <div class="color-control">
+
+                            <input
+                                type="color"
+                                id="background"
+                                value="#FFFFFF"
+                                aria-label="Background color"
+                            >
+
+                            <input
+                                type="text"
+                                id="background-text"
+                                value="#FFFFFF"
+                                maxlength="7"
+                                aria-label="Background HEX color"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="ecc">
+                            Error correction
+                        </label>
+
+                        <select id="ecc">
+
+                            <option value="L">
+                                L — Low
+                            </option>
+
+                            <option value="M" selected>
+                                M — Medium
+                            </option>
+
+                            <option value="Q">
+                                Q — Quartile
+                            </option>
+
+                            <option value="H">
+                                H — High
+                            </option>
+
+                        </select>
+
+                        <div class="help">
+                            Higher levels provide greater resistance
+                            to partial damage.
+                        </div>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="margin">
+                            Quiet zone
+                        </label>
+
+                        <select id="margin">
+
+                            <option value="2">
+                                2 modules
+                            </option>
+
+                            <option value="4" selected>
+                                4 modules — Recommended
+                            </option>
+
+                            <option value="6">
+                                6 modules
+                            </option>
+
+                            <option value="8">
+                                8 modules
+                            </option>
+
+                        </select>
+
+                        <div class="help">
+                            Keep sufficient clear space around the code.
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 ACTIONS
+                 ============================================= -->
+
+            <div class="generator-actions">
+
+                <button
+                    class="button button-primary"
+                    id="generate"
+                    type="button"
+                >
+                    Generate QR code
+                </button>
+
+                <button
+                    class="button"
+                    id="clear"
+                    type="button"
+                >
+                    Clear
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             PREVIEW
+             ================================================= -->
+
+        <aside class="panel preview-panel">
+
+            <div class="preview-status">
+
+                <div>
+
+                    <div class="panel-kicker">
+                        Output
+                    </div>
+
+                    <h2 class="panel-title">
+                        Preview
+                    </h2>
+
+                </div>
+
+
+                <span
+                    class="status"
+                    id="status"
+                >
+                    Waiting
+                </span>
+
+            </div>
+
+
+            <div class="preview-frame">
+
+                <div id="qr-output">
+
+                    <div class="placeholder">
+
+                        <div
+                            class="placeholder-icon"
+                            aria-hidden="true"
+                        ></div>
+
+                        <strong>
+                            No QR code yet
+                        </strong>
+
+                        Enter your content and generate
+                        a QR code to see the result here.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="export-actions">
+
+                <button
+                    class="button button-primary"
+                    id="download-png"
+                    type="button"
+                    disabled
+                >
+                    Download PNG
+                </button>
+
+                <button
+                    class="button"
+                    id="download-svg"
+                    type="button"
+                    disabled
+                >
+                    Download SVG
+                </button>
+
+            </div>
+
+
+            <button
+                class="button print-button"
+                id="print"
+                type="button"
+                disabled
+            >
+                Print QR code
+            </button>
+
+        </aside>
+
+
+    </div>
+
+
+    <!-- =====================================================
+         PRIVACY
+         ===================================================== -->
+
+    <div class="privacy-card">
+
+        <div class="privacy-icon" aria-hidden="true">
+            ✓
+        </div>
+
+        <div>
+
+            <h3>
+                Privacy by design
+            </h3>
+
+            <p>
+                QR content is designed to be processed locally in
+                your browser. Normal QR generation does not require
+                an account, database, file upload or server-side
+                QR processing. Your QR content is not intentionally
+                transmitted to a QR generation server by this tool.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =======================================================
+     EDUCATION
+     ======================================================= -->
+
+<section class="education-section">
+
+    <div class="container">
+
+        <div class="section-intro">
+
+            <span class="section-label">
+                Educational information
+            </span>
+
+            <h2 class="section-heading">
+                Understanding QR codes
+            </h2>
+
+            <p>
+                QR codes are two-dimensional optical symbols designed
+                to represent information in a machine-readable format.
+                Reliable scanning depends on both the encoded data
+                and the physical quality of the final symbol.
+            </p>
+
+        </div>
+
+
+        <div class="education-grid">
+
+
+            <article class="education-card">
+
+                <span class="education-number">
+                    01
+                </span>
+
+                <h3>
+                    Error correction
+                </h3>
+
+                <p>
+                    QR codes contain redundant information that can
+                    help a scanner recover encoded data when portions
+                    of the symbol are damaged or obscured.
+                </p>
+
+            </article>
+
+
+            <article class="education-card">
+
+                <span class="education-number">
+                    02
+                </span>
+
+                <h3>
+                    Quiet zone
+                </h3>
+
+                <p>
+                    The clear area surrounding a QR code helps scanning
+                    systems identify the boundary of the symbol and
+                    distinguish it from nearby visual elements.
+                </p>
+
+            </article>
+
+
+            <article class="education-card">
+
+                <span class="education-number">
+                    03
+                </span>
+
+                <h3>
+                    Contrast
+                </h3>
+
+                <p>
+                    Strong visual contrast between the modules and
+                    their background generally improves scanning
+                    reliability, particularly in printed material.
+                </p>
+
+            </article>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =======================================================
+     LEGAL
+     ======================================================= -->
+
+<section class="legal-section" id="legal">
+
+    <div class="container legal-content">
+
+        <h2>
+            Privacy, Legal Information &amp; Terms
+        </h2>
+
+
+        <div class="legal-block">
+
+            <h3>
+                Privacy
+            </h3>
+
+            <p>
+                This website is designed as a client-side QR code
+                generation tool. Information entered into the QR
+                generator is intended to be processed locally within
+                the user's web browser.
+            </p>
+
+        </div>
+
+
+        <div class="legal-block">
+
+            <h3>
+                Data processing
+            </h3>
+
+            <p>
+                Normal QR generation is designed not to require an
+                account, registration, database, file upload or
+                server-side QR processing. The application is designed
+                to minimize unnecessary transmission of the content
+                supplied by the user.
+            </p>
+
+        </div>
+
+
+        <div class="legal-block">
+
+            <h3>
+                Personal information
+            </h3>
+
+            <p>
+                Users should avoid entering sensitive personal
+                information unless they understand the consequences
+                of encoding, displaying, downloading, printing or
+                distributing that information in a QR code. A QR code
+                can be copied, photographed, forwarded and decoded
+                by third parties.
+            </p>
+
+        </div>
+
+
+        <div class="legal-block">
+
+            <h3>
+                QR code responsibility
+            </h3>
+
+            <p>
+                The generated QR code represents information supplied
+                by the user. The operator of this website does not
+                control how a generated QR code is subsequently copied,
+                distributed, printed, scanned or used.
+            </p>
+
+        </div>
+
+
+        <div class="legal-block">
+
+            <h3>
+                External websites and services
+            </h3>
+
+            <p>
+                A QR code may contain a URL, contact information,
+                network information or another reference to an
+                external service. Once an external destination is
+                accessed, that destination may operate under its own
+                privacy policy, security practices and terms.
+            </p>
+
+        </div>
+
+
+        <div class="legal-block">
+
+            <h3>
+                No warranty
+            </h3>
+
+            <p>
+                This tool is provided on an “as is” and “as available”
+                basis to the fullest extent permitted by applicable
+                law. No guarantee is made that every generated QR
+                code will be readable under every scanner, camera,
+                device, lighting condition, screen or printing process.
+            </p>
+
+        </div>
+
+
+        <div class="legal-block">
+
+            <h3>
+                User responsibility
+            </h3>
+
+            <p>
+                Users are responsible for verifying the accuracy and
+                readability of a QR code before publishing, printing
+                or distributing it. Important QR codes should be tested
+                using the intended scanning devices and, where relevant,
+                the final printed material.
+            </p>
+
+        </div>
+
+
+        <div class="legal-block">
+
+            <h3>
+                Intellectual property
+            </h3>
+
+            <p>
+                QR Code technology, specifications, names and related
+                marks may be subject to rights held by their respective
+                owners. This website does not claim ownership of
+                third-party standards, libraries, trademarks or
+                intellectual property.
+            </p>
+
+        </div>
+
+
+        <div class="legal-block">
+
+            <h3>
+                Changes
+            </h3>
+
+            <p>
+                The website, its functionality and these legal notices
+                may be updated, modified or discontinued without prior
+                notice.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+
+<!-- =======================================================
+     PREMIUM FOOTER
+     ======================================================= -->
+
+<footer class="site-footer">
+
+    <div class="container footer-inner">
+
+
+        <div class="footer-main">
+
+
+            <div class="footer-brand">
+
+                <div class="footer-brand-row">
+
+                    <div
+                        class="footer-mark"
+                        aria-hidden="true"
+                    ></div>
+
+                    <div>
+
+                        <p class="footer-title">
+                            QR NVO987
+                        </p>
+
+                        <p class="footer-caption">
+                            Independent browser-based tool
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <p class="footer-description">
+                    A focused QR code utility created for clear,
+                    practical and privacy-conscious use. Designed
+                    to keep ordinary QR generation within the user's
+                    browser rather than relying on a remote QR
+                    processing service.
+                </p>
+
+            </div>
+
+
+
+            <nav class="footer-links" aria-label="Footer links">
+
+                <span class="footer-link-label">
+                    Contact &amp; identity
+                </span>
+
+
+                <a
+                    class="footer-link"
+                    href="mailto:nvo@nvo987.us"
+                >
+                    <span>
+                        nvo@nvo987.us
+                    </span>
+
+                    <span class="footer-arrow">
+                        ↗
+                    </span>
+                </a>
+
+
+                <a
+                    class="footer-link"
+                    href="https://www.nvo987.us"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <span>
+                        www.nvo987.us
+                    </span>
+
+                    <span class="footer-arrow">
+                        ↗
+                    </span>
+                </a>
+
+
+                <a
+                    class="footer-link"
+                    href="https://identity.nvo987.us"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <span>
+                        did:web:identity.nvo987.us
+                    </span>
+
+                    <span class="footer-arrow">
+                        ↗
+                    </span>
+                </a>
+
+            </nav>
+
+
+        </div>
+
+
+
+        <div class="footer-bottom">
+
+            <div class="footer-copyright">
+                © 2026 Nicholas Van-Orton. All rights reserved.
+            </div>
+
+
+            <div class="footer-meta">
+
+                <span>
+                    QR NVO987
+                </span>
+
+                <span class="footer-dot"></span>
+
+                <span>
+                    Client-side application
+                </span>
+
+                <span class="footer-dot"></span>
+
+                <span>
+                    nvo987.us
+                </span>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</footer>
+
+
+
+<script>
+/* =========================================================
+   QR NVO987 — Application Layer
+   ========================================================= */
+
+"use strict";
+
+
+/* =========================================================
+   STATE
+   ========================================================= */
+
+let currentType = "text";
+
+let currentCanvas = null;
+let currentSvg = null;
+
+
+/* =========================================================
+   DOM
+   ========================================================= */
+
+const output =
+    document.getElementById("qr-output");
+
+const status =
+    document.getElementById("status");
+
+const generateButton =
+    document.getElementById("generate");
+
+const clearButton =
+    document.getElementById("clear");
+
+const downloadPng =
+    document.getElementById("download-png");
+
+const downloadSvg =
+    document.getElementById("download-svg");
+
+const printButton =
+    document.getElementById("print");
+
+
+/* =========================================================
+   TYPE SWITCHING
+   ========================================================= */
+
+document
+    .querySelectorAll(".type-button")
+    .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            document
+                .querySelectorAll(".type-button")
+                .forEach(item => {
+                    item.classList.remove("active");
+                });
+
+            button.classList.add("active");
+
+            currentType =
+                button.dataset.type;
+
+            renderForm();
+
+            resetPreview();
+
+        });
+
+    });
+
+
+/* =========================================================
+   FORM RENDERING
+   ========================================================= */
+
+function renderForm() {
+
+    const area =
+        document.getElementById("form-area");
+
+
+    if (currentType === "text") {
+
+        area.innerHTML = `
+
+            <div class="field">
+
+                <label for="main-input">
+                    Text
+                </label>
+
+                <textarea
+                    id="main-input"
+                    placeholder="Enter the text you want to encode..."
+                    autocomplete="off"
+                ></textarea>
+
+                <div class="help">
+                    Any text that can be represented by a QR code.
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    if (currentType === "url") {
+
+        area.innerHTML = `
+
+            <div class="field">
+
+                <label for="main-input">
+                    Website URL
+                </label>
+
+                <input
+                    id="main-input"
+                    type="url"
+                    placeholder="https://example.com"
+                    autocomplete="url"
+                >
+
+                <div class="help">
+                    Use the complete URL, including https:// where appropriate.
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    if (currentType === "email") {
+
+        area.innerHTML = `
+
+            <div class="field">
+
+                <label for="email-address">
+                    E-mail address
+                </label>
+
+                <input
+                    id="email-address"
+                    type="email"
+                    placeholder="name@example.com"
+                    autocomplete="email"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="email-subject">
+                    Subject
+                </label>
+
+                <input
+                    id="email-subject"
+                    type="text"
+                    placeholder="Optional subject"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="email-body">
+                    Message
+                </label>
+
+                <textarea
+                    id="email-body"
+                    placeholder="Optional message"
+                ></textarea>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    if (currentType === "wifi") {
+
+        area.innerHTML = `
+
+            <div class="field">
+
+                <label for="wifi-ssid">
+                    Network name (SSID)
+                </label>
+
+                <input
+                    id="wifi-ssid"
+                    type="text"
+                    placeholder="My Wi-Fi"
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="wifi-password">
+                    Password
+                </label>
+
+                <input
+                    id="wifi-password"
+                    type="text"
+                    placeholder="Wi-Fi password"
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="wifi-security">
+                    Security
+                </label>
+
+                <select id="wifi-security">
+
+                    <option value="WPA">
+                        WPA / WPA2 / WPA3
+                    </option>
+
+                    <option value="WEP">
+                        WEP
+                    </option>
+
+                    <option value="nopass">
+                        No password
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="wifi-hidden">
+                    Hidden network
+                </label>
+
+                <select id="wifi-hidden">
+
+                    <option value="false">
+                        No
+                    </option>
+
+                    <option value="true">
+                        Yes
+                    </option>
+
+                </select>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    if (currentType === "vcard") {
+
+        area.innerHTML = `
+
+            <div class="field">
+
+                <label for="vc-name">
+                    Full name
+                </label>
+
+                <input
+                    id="vc-name"
+                    type="text"
+                    placeholder="Jane Doe"
+                    autocomplete="name"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="vc-company">
+                    Organization
+                </label>
+
+                <input
+                    id="vc-company"
+                    type="text"
+                    placeholder="Organization"
+                    autocomplete="organization"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="vc-phone">
+                    Phone
+                </label>
+
+                <input
+                    id="vc-phone"
+                    type="tel"
+                    placeholder="+1 555 123 4567"
+                    autocomplete="tel"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="vc-email">
+                    E-mail
+                </label>
+
+                <input
+                    id="vc-email"
+                    type="email"
+                    placeholder="name@example.com"
+                    autocomplete="email"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="vc-url">
+                    Website
+                </label>
+
+                <input
+                    id="vc-url"
+                    type="url"
+                    placeholder="https://example.com"
+                    autocomplete="url"
+                >
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   DATA BUILDING
+   ========================================================= */
+
+function getQRData() {
+
+
+    if (currentType === "text") {
+
+        return (
+            document
+                .getElementById("main-input")
+                .value
+        );
+
+    }
+
+
+    if (currentType === "url") {
+
+        return (
+            document
+                .getElementById("main-input")
+                .value
+                .trim()
+        );
+
+    }
+
+
+    if (currentType === "email") {
+
+        const address =
+            document
+                .getElementById("email-address")
+                .value
+                .trim();
+
+        const subject =
+            document
+                .getElementById("email-subject")
+                .value
+                .trim();
+
+        const body =
+            document
+                .getElementById("email-body")
+                .value
+                .trim();
+
+
+        const params =
+            new URLSearchParams();
+
+
+        if (subject) {
+            params.set("subject", subject);
+        }
+
+
+        if (body) {
+            params.set("body", body);
+        }
+
+
+        return (
+            "mailto:" +
+            address +
+            (
+                params.toString()
+                    ? "?" + params.toString()
+                    : ""
+            )
+        );
+
+    }
+
+
+    if (currentType === "wifi") {
+
+        const ssid =
+            document
+                .getElementById("wifi-ssid")
+                .value;
+
+        const password =
+            document
+                .getElementById("wifi-password")
+                .value;
+
+        const security =
+            document
+                .getElementById("wifi-security")
+                .value;
+
+        const hidden =
+            document
+                .getElementById("wifi-hidden")
+                .value;
+
+
+        return (
+            "WIFI:" +
+            "T:" + security + ";" +
+            "S:" + escapeWifi(ssid) + ";" +
+            "P:" + escapeWifi(password) + ";" +
+            "H:" + hidden +
+            ";;"
+        );
+
+    }
+
+
+    if (currentType === "vcard") {
+
+        const name =
+            document
+                .getElementById("vc-name")
+                .value
+                .trim();
+
+        const company =
+            document
+                .getElementById("vc-company")
+                .value
+                .trim();
+
+        const phone =
+            document
+                .getElementById("vc-phone")
+                .value
+                .trim();
+
+        const email =
+            document
+                .getElementById("vc-email")
+                .value
+                .trim();
+
+        const url =
+            document
+                .getElementById("vc-url")
+                .value
+                .trim();
+
+
+        return [
+
+            "BEGIN:VCARD",
+
+            "VERSION:3.0",
+
+            "FN:" + escapeVCard(name),
+
+            company
+                ? "ORG:" + escapeVCard(company)
+                : "",
+
+            phone
+                ? "TEL:" + phone
+                : "",
+
+            email
+                ? "EMAIL:" + email
+                : "",
+
+            url
+                ? "URL:" + url
+                : "",
+
+            "END:VCARD"
+
+        ]
+        .filter(Boolean)
+        .join("\r\n");
+
+    }
+
+
+    return "";
+
+}
+
+
+/* =========================================================
+   ESCAPING
+   ========================================================= */
+
+function escapeWifi(value) {
+
+    return String(value)
+        .replace(/\\/g, "\\\\")
+        .replace(/;/g, "\\;")
+        .replace(/,/g, "\\,")
+        .replace(/:/g, "\\:");
+
+}
+
+
+function escapeVCard(value) {
+
+    return String(value)
+        .replace(/\\/g, "\\\\")
+        .replace(/;/g, "\\;")
+        .replace(/,/g, "\\,")
+        .replace(/\r?\n/g, "\\n");
+
+}
+
+
+/* =========================================================
+   COLOR SYNCHRONIZATION
+   ========================================================= */
+
+function syncColor(colorId, textId) {
+
+    const color =
+        document.getElementById(colorId);
+
+    const text =
+        document.getElementById(textId);
+
+
+    color.addEventListener("input", () => {
+
+        text.value =
+            color.value.toUpperCase();
+
+    });
+
+
+    text.addEventListener("change", () => {
+
+        const value =
+            text.value.trim();
+
+
+        if (/^#[0-9A-F]{6}$/i.test(value)) {
+
+            color.value =
+                value;
+
+        }
+
+    });
+
+}
+
+
+syncColor(
+    "foreground",
+    "foreground-text"
+);
+
+syncColor(
+    "background",
+    "background-text"
+);
+
+
+/* =========================================================
+   PREVIEW RESET
+   ========================================================= */
+
+function resetPreview() {
+
+    currentCanvas = null;
+    currentSvg = null;
+
+
+    output.innerHTML = `
+
+        <div class="placeholder">
+
+            <div
+                class="placeholder-icon"
+                aria-hidden="true"
+            ></div>
+
+            <strong>
+                No QR code yet
+            </strong>
+
+            Enter your content and generate
+            a QR code to see the result here.
+
+        </div>
+
+    `;
+
+
+    status.textContent =
+        "Waiting";
+
+    status.classList.remove("ready");
+
+
+    downloadPng.disabled = true;
+    downloadSvg.disabled = true;
+    printButton.disabled = true;
+
+}
+
+
+clearButton.addEventListener(
+    "click",
+    resetPreview
+);
+
+
+/* =========================================================
+   GENERATE
+   ========================================================= */
+
+generateButton.addEventListener(
+    "click",
+    () => {
+
+        const data =
+            getQRData().trim();
+
+
+        if (!data) {
+
+            alert(
+                "Please enter content before generating a QR code."
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * =====================================================
+         * QR ENGINE INTEGRATION
+         * =====================================================
+         *
+         * The final production version should embed a complete
+         * QR encoder here rather than requesting QR generation
+         * from a remote API.
+         *
+         * Example:
+         *
+         * const qr = qrcode(0, ecc.value);
+         * qr.addData(data);
+         * qr.make();
+         *
+         * Then render the resulting modules into SVG/canvas.
+         *
+         * Keeping the QR encoder inside this HTML file allows
+         * the application to remain self-contained.
+         */
+
+        output.innerHTML = `
+
+            <div class="placeholder">
+
+                <div
+                    class="placeholder-icon"
+                    aria-hidden="true"
+                ></div>
+
+                <strong>
+                    QR engine integration point
+                </strong>
+
+                The content has been prepared locally.
+                Embed the QR encoder here for the final
+                self-contained production version.
+
+            </div>
+
+        `;
+
+    }
+);
+
+
+/* =========================================================
+   PRINT
+   ========================================================= */
+
+printButton.addEventListener(
+    "click",
+    () => {
+
+        window.print();
+
+    }
+);
+
+
+/* =========================================================
+   INITIAL STATE
+   ========================================================= */
+
+renderForm();
+
+resetPreview();
+
+</script>
+
+</body>
+</html>
